@@ -1,0 +1,29 @@
+2026-06-03 22:01:56,511 - INFO - Loading cleaned dataset...
+2026-06-03 22:01:58,238 - INFO - Dataset size: 5399
+2026-06-03 22:01:58,243 - INFO - Label distribution:
+label
+0    3669
+1    1730
+2026-06-03 22:02:00,426 - INFO - Train size: 4319, Test size: 1080
+2026-06-03 22:02:00,793 - INFO - Start training...
+2026-06-03 22:03:09,029 - INFO - 
+=== CLASSIFICATION REPORT ===
+2026-06-03 22:03:09,041 - INFO - 
+              precision    recall  f1-score   support
+
+      Normal       0.99      1.00      0.99       738
+        Spam       1.00      0.98      0.99       342
+
+    accuracy                           0.99      1080
+   macro avg       0.99      0.99      0.99      1080
+weighted avg       0.99      0.99      0.99      1080
+
+2026-06-03 22:03:09,042 - INFO - 
+=== CONFUSION MATRIX ===
+2026-06-03 22:03:09,046 - INFO - 
+[[738   0]
+ [  8 334]]
+2026-06-03 22:03:09,126 - INFO - Model saved to model/cnn_model.h5
+2026-06-03 22:03:09,293 - INFO - Tokenizer saved to model/tokenizer.pkl
+2026-06-03 22:03:09,925 - INFO - Training charts saved to logs/charts/training_history.png
+2026-06-03 22:03:09,926 - INFO - Training complete!
