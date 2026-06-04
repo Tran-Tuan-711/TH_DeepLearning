@@ -1,8 +1,3 @@
-"""
-Email Spam Classifier — GUI Application
-Giao diện đồ họa phân loại email spam sử dụng tkinter.
-"""
-
 import tkinter as tk
 from tkinter import ttk, messagebox, scrolledtext
 import threading

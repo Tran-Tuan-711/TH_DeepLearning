@@ -1,17 +1,3 @@
-"""
-PhishingRuleEngine — Bộ phát hiện spam/phishing dựa trên rules.
-
-Quy trình kiểm tra:
-  1. Whitelist domain/sender → tự động Normal
-  2. Suspicious domain → tự động Spam
-  3. Keyword matching theo từng nhóm → tính spam score
-  4. Suspicious sender pattern → tăng spam score
-  5. Nếu spam_score > threshold → Spam (rule-based)
-  6. Nếu không đủ evidence → fallback sang model prediction
-
-Kết hợp với model CNN/LR/BERT: Rule check trước, model sau.
-"""
-
 import re
 from rules.vietnam_spam_rules import (
     SPAM_KEYWORD_GROUPS,
@@ -23,26 +9,7 @@ from rules.vietnam_spam_rules import (
 
 
 class PhishingRuleEngine:
-    """
-    Engine phát hiện spam/phishing dựa trên rules Việt Nam.
-
-    Tính spam_score dựa trên:
-    - Keyword match (theo nhóm, có trọng số)
-    - Domain đáng ngờ
-    - Sender pattern đáng ngờ
-
-    Nếu spam_score >= threshold → phân loại là Spam (rule-based).
-    Nếu email thuộc whitelist → phân loại là Normal (rule-based).
-    Còn lại → fallback sang model (không quyết định).
-    """
-
     def __init__(self, spam_threshold=1.5):
-        """
-        Args:
-            spam_threshold: Ngưỡng spam_score để quyết định Spam.
-                           Mặc định 1.5 (cần ít nhất 1 keyword match nhóm nặng
-                           hoặc 2+ keyword match nhóm nhẹ).
-        """
         self.spam_threshold = spam_threshold
         self.keyword_groups = SPAM_KEYWORD_GROUPS
         self.trusted_domains = [d.lower() for d in TRUSTED_DOMAINS]
@@ -103,10 +70,6 @@ class PhishingRuleEngine:
         return False
 
     def _match_keywords(self, text):
-        """
-        Tìm keyword match trong text, trả về danh sách nhóm đã khớp
-        và tổng spam score.
-        """
         text_lower = text.lower()
         matched_groups = []
         total_score = 0.0
@@ -131,24 +94,6 @@ class PhishingRuleEngine:
         return matched_groups, total_score
 
     def classify(self, subject="", body="", sender_email="", sender_name=""):
-        """
-        Phân loại email dựa trên rules.
-
-        Args:
-            subject: Tiêu đề email
-            body: Nội dung email
-            sender_email: Địa chỉ email người gửi (e.g. "noreply@google.com")
-            sender_name: Tên hiển thị người gửi
-
-        Returns:
-            dict:
-                - label: "Spam" / "Normal" / None (None = không quyết định được, cần model)
-                - confidence: float (0-1)
-                - method: "rule_whitelist" / "rule_suspicious" / "rule_keyword" / None
-                - matched_rules: list of matched groups
-                - spam_score: float
-                - details: str mô tả chi tiết
-        """
         full_text = f"{subject} {body}".strip()
         domain = self._extract_domain(sender_email)
 
@@ -238,9 +183,6 @@ class PhishingRuleEngine:
         return result
 
     def get_report(self, subject="", body="", sender_email="", sender_name=""):
-        """
-        Tạo báo cáo chi tiết phân tích email (dùng cho debug/display).
-        """
         result = self.classify(subject, body, sender_email, sender_name)
         domain = self._extract_domain(sender_email)
 

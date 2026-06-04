@@ -1,18 +1,4 @@
-"""
-Bộ từ khóa và rules phát hiện spam/phishing cho email tại Việt Nam.
-Phân chia theo nhóm để dễ quản lý và cập nhật.
-
-Cấu trúc:
-- SPAM_KEYWORD_GROUPS: Từ khóa spam phân theo nhóm (ngân hàng, tiền bạc, ...)
-- TRUSTED_DOMAINS: Domain đáng tin cậy (whitelist)
-- SUSPICIOUS_DOMAIN_PATTERNS: Pattern domain đáng ngờ
-- SUSPICIOUS_SENDER_PATTERNS: Pattern tên email đáng ngờ
-- TRUSTED_SENDER_PATTERNS: Pattern email hợp lệ (GitHub, Google, ...)
-"""
-
-# ==============================================================================
 # NHÓM 1: GIẢ MẠO NGÂN HÀNG (Bank Phishing)
-# ==============================================================================
 BANK_PHISHING_KEYWORDS = [
     # Hành động giả mạo
     "xác minh tài khoản ngân hàng", "cập nhật thông tin ngân hàng",
@@ -36,9 +22,7 @@ BANK_PHISHING_KEYWORDS = [
     "vnpay yêu cầu xác nhận", "shopeepay xác minh",
 ]
 
-# ==============================================================================
 # NHÓM 2: TIỀN BẠC / KHUYẾN MÃI (Money / Promotion Scam)
-# ==============================================================================
 MONEY_PROMO_KEYWORDS = [
     # Trúng thưởng
     "chúc mừng bạn đã trúng thưởng", "bạn đã trúng giải",
@@ -61,9 +45,7 @@ MONEY_PROMO_KEYWORDS = [
     "kiếm tiền dễ dàng", "thu nhập hàng ngày",
 ]
 
-# ==============================================================================
 # NHÓM 3: GIẢ MẠO DỊCH VỤ (Service Impersonation)
-# ==============================================================================
 SERVICE_PHISHING_KEYWORDS = [
     # Fake urgency
     "tài khoản sẽ bị xóa", "tài khoản sẽ bị khóa vĩnh viễn",
@@ -84,9 +66,7 @@ SERVICE_PHISHING_KEYWORDS = [
     "cập nhật bảo mật khẩn cấp",
 ]
 
-# ==============================================================================
 # NHÓM 4: ĐẦU TƯ / LỪA ĐẢO TÀI CHÍNH (Investment Scam)
-# ==============================================================================
 INVESTMENT_SCAM_KEYWORDS = [
     "lợi nhuận 300%", "lợi nhuận 200%", "lợi nhuận 500%",
     "đầu tư bitcoin", "đầu tư crypto", "đầu tư tiền điện tử",
@@ -101,9 +81,7 @@ INVESTMENT_SCAM_KEYWORDS = [
     "đào coin", "mining bitcoin",
 ]
 
-# ==============================================================================
 # NHÓM 5: VIỆC LÀM GIẢ (Fake Job Scam)
-# ==============================================================================
 FAKE_JOB_KEYWORDS = [
     "tuyển dụng làm việc tại nhà", "việc nhẹ lương cao",
     "tuyển cộng tác viên online", "thu nhập 50 triệu",
@@ -114,9 +92,7 @@ FAKE_JOB_KEYWORDS = [
     "đăng ký làm cộng tác viên",
 ]
 
-# ==============================================================================
 # NHÓM 6: THÔNG BÁO GIẢ (Fake Notification)
-# ==============================================================================
 FAKE_NOTIFICATION_KEYWORDS = [
     "bạn có bưu phẩm chưa nhận", "đơn hàng cần xác nhận thanh toán",
     "giao hàng thất bại cần xác nhận", "xác nhận nhận hàng",
@@ -125,9 +101,7 @@ FAKE_NOTIFICATION_KEYWORDS = [
     "thông báo trúng thưởng từ shopee", "lazada thông báo trúng thưởng",
 ]
 
-# ==============================================================================
 # Tổng hợp tất cả nhóm keywords
-# ==============================================================================
 SPAM_KEYWORD_GROUPS = {
     "bank_phishing": {
         "name": "Giả mạo ngân hàng",
@@ -161,10 +135,8 @@ SPAM_KEYWORD_GROUPS = {
     },
 }
 
-# ==============================================================================
 # DOMAIN ĐÁNG TIN CẬY (Whitelist)
 # Các email từ domain này sẽ tự động được coi là Normal
-# ==============================================================================
 TRUSTED_DOMAINS = [
     # Google services (chỉ domain dịch vụ, KHÔNG gồm gmail.com)
     "google.com", "classroom.google.com",
@@ -212,10 +184,8 @@ TRUSTED_DOMAINS = [
     "figma.com", "spotify.com", "netflix.com",
 ]
 
-# ==============================================================================
 # PATTERN DOMAIN ĐÁNG NGỜ
 # Domain sử dụng TLD rẻ tiền, hoặc pattern giả mạo
-# ==============================================================================
 SUSPICIOUS_DOMAIN_PATTERNS = [
     # TLD rẻ tiền thường bị lạm dụng
     r".*\.xyz$",
@@ -254,9 +224,7 @@ SUSPICIOUS_DOMAIN_PATTERNS = [
     r".*\.vietcombank\.(?!com\.vn).*",  # fake.vietcombank.xyz
 ]
 
-# ==============================================================================
 # PATTERN TÊN EMAIL ĐÁNG NGỜ
-# ==============================================================================
 SUSPICIOUS_SENDER_PATTERNS = [
     r"^[a-z]{18,}@",                    # Tên toàn chữ thường dài bất thường
     r"^[a-z0-9]{22,}@",                 # Mix chữ + số quá dài (random)
@@ -273,9 +241,7 @@ SUSPICIOUS_SENDER_PATTERNS = [
     r".*lucky\d*@.*",                   # lucky@...
 ]
 
-# ==============================================================================
 # PATTERN EMAIL HỢP LỆ (sẽ ưu tiên Normal)
-# ==============================================================================
 TRUSTED_SENDER_PATTERNS = [
     r".*@.*\.google\.com$",             # noreply@classroom.google.com
     r".*noreply@github\.com$",          # GitHub notifications

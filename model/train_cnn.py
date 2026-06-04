@@ -50,9 +50,7 @@ def train():
 
     logger.info(f"Train size: {len(X_train)}, Test size: {len(X_test)}")
 
-    # =====================
     # CNN Model (2-class)
-    # =====================
     model = Sequential([
         Embedding(MAX_WORDS, 128, input_length=MAX_LEN),
         Conv1D(128, 5, activation='relu'),
@@ -85,9 +83,7 @@ def train():
         callbacks=[early_stop, tensorboard]
     )
 
-    # =====================
     # Evaluation
-    # =====================
     y_pred = (model.predict(X_test) > 0.5).astype(int).flatten()
 
     logger.info("\n=== CLASSIFICATION REPORT ===")
@@ -98,9 +94,7 @@ def train():
     cm = confusion_matrix(y_test, y_pred)
     logger.info(f"\n{cm}")
 
-    # =====================
     # Save model & tokenizer
-    # =====================
     model.save(MODEL_PATH)
     logger.info(f"Model saved to {MODEL_PATH}")
 
@@ -108,9 +102,7 @@ def train():
         pickle.dump(tokenizer, f)
     logger.info(f"Tokenizer saved to {TOKENIZER_PATH}")
 
-    # =====================
     # Save charts
-    # =====================
     os.makedirs("logs/charts", exist_ok=True)
 
     plt.figure(figsize=(10, 4))

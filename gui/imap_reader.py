@@ -1,15 +1,3 @@
-"""
-IMAPEmailReader — Module đọc email từ IMAP server.
-
-Hỗ trợ:
-  - Gmail (imap.gmail.com) — cần App Password
-  - Outlook (outlook.office365.com)
-  - Yahoo (imap.mail.yahoo.com)
-  - Custom IMAP server
-
-Sử dụng thư viện built-in: imaplib, email (không cần cài thêm).
-"""
-
 import imaplib
 import email
 from email.header import decode_header
@@ -27,15 +15,6 @@ IMAP_PRESETS = {
 
 
 def detect_imap_server(email_addr):
-    """
-    Tự động nhận diện IMAP server từ địa chỉ email.
-
-    Args:
-        email_addr: Địa chỉ email (ví dụ: user@gmail.com)
-
-    Returns:
-        tuple: (server, port, display_name) hoặc (None, None, None) nếu không nhận diện được.
-    """
     if not email_addr or "@" not in email_addr:
         return None, None, None
 
@@ -67,34 +46,11 @@ def detect_imap_server(email_addr):
 
 
 class IMAPEmailReader:
-    """
-    Đọc email từ IMAP server.
-
-    Usage:
-        reader = IMAPEmailReader()
-        reader.connect("imap.gmail.com", 993, "user@gmail.com", "app_password")
-        emails = reader.fetch_emails(folder="INBOX", limit=20)
-        reader.disconnect()
-    """
-
     def __init__(self):
         self.connection = None
         self.is_connected = False
 
     def connect(self, server, port, email_addr, password):
-        """
-        Kết nối đến IMAP server qua SSL.
-
-        Args:
-            server: IMAP server hostname (e.g. "imap.gmail.com")
-            port: Port number (thường là 993 cho SSL)
-            email_addr: Địa chỉ email
-            password: Mật khẩu hoặc App Password
-
-        Raises:
-            ConnectionError: Nếu không thể kết nối
-            AuthenticationError: Nếu sai credentials
-        """
         try:
             self.connection = imaplib.IMAP4_SSL(server, port)
             self.connection.login(email_addr, password)
@@ -114,23 +70,6 @@ class IMAPEmailReader:
             raise ConnectionError(f"Lỗi kết nối: {e}") from e
 
     def fetch_emails(self, folder="INBOX", limit=20):
-        """
-        Đọc email từ folder chỉ định.
-
-        Args:
-            folder: Tên folder IMAP (default: "INBOX")
-            limit: Số email tối đa cần đọc (mới nhất trước)
-
-        Returns:
-            List[dict] — mỗi dict gồm:
-                - message_id: str
-                - sender: str (email address)
-                - sender_name: str
-                - subject: str
-                - body: str (plain text)
-                - date: datetime | None
-                - date_str: str (formatted)
-        """
         if not self.is_connected or self.connection is None:
             raise ConnectionError("Chưa kết nối IMAP. Gọi connect() trước.")
 
@@ -269,10 +208,6 @@ class IMAPEmailReader:
             return str(value)
 
     def _extract_body(self, msg):
-        """
-        Trích xuất plain text body từ email message.
-        Hỗ trợ multipart và single-part.
-        """
         body = ""
 
         if msg.is_multipart():
