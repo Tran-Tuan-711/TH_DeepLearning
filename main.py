@@ -9,7 +9,7 @@ import os
 # Đảm bảo import path đúng
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from GUI.app import EmailClassifierApp
+from gui.app import EmailClassifierApp
 
 
 def main():
