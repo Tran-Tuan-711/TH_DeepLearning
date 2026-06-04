@@ -256,22 +256,3 @@ TRUSTED_SENDER_PATTERNS = [
 ]
 
 
-def get_all_spam_keywords():
-    """Trả về list tất cả spam keywords (flat list)."""
-    all_keywords = []
-    for group in SPAM_KEYWORD_GROUPS.values():
-        all_keywords.extend(group["keywords"])
-    return all_keywords
-
-
-def get_keyword_groups_summary():
-    """Trả về summary các nhóm keywords để hiển thị."""
-    summary = {}
-    for group_id, group in SPAM_KEYWORD_GROUPS.items():
-        summary[group_id] = {
-            "name": group["name"],
-            "count": len(group["keywords"]),
-            "weight": group["weight"],
-            "sample": group["keywords"][:5],  # 5 keywords mẫu
-        }
-    return summary

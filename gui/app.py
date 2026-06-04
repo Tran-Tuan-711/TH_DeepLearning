@@ -283,7 +283,7 @@ class EmailClassifierApp:
     # ─── Actions ────────────────────────────────────────────────────
     def _on_email_changed(self, *args):
         """Callback khi email thay đổi — tự động nhận diện IMAP server."""
-        from GUI.imap_reader import detect_imap_server
+        from gui.imap_reader import detect_imap_server
         email_addr = self.imap_email_var.get().strip()
         server, port, display_name = detect_imap_server(email_addr)
         if server and display_name:
@@ -371,7 +371,7 @@ class EmailClassifierApp:
         self.result_details.config(state="disabled")
 
     def _on_connect_imap(self):
-        from GUI.imap_reader import detect_imap_server
+        from gui.imap_reader import detect_imap_server
 
         email_addr = self.imap_email_var.get().strip()
         password = self.imap_password_var.get().strip()
@@ -395,7 +395,7 @@ class EmailClassifierApp:
 
         def do_fetch():
             try:
-                from GUI.imap_reader import IMAPEmailReader
+                from gui.imap_reader import IMAPEmailReader
                 reader = IMAPEmailReader()
                 reader.connect(server, port, email_addr, password)
                 emails = reader.fetch_emails(folder="INBOX", limit=limit)

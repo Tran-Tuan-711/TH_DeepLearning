@@ -6,13 +6,6 @@ import re
 from datetime import datetime
 
 
-# ─── Preset IMAP servers ───────────────────────────────────────────────
-IMAP_PRESETS = {
-    "Gmail": {"server": "imap.gmail.com", "port": 993},
-    "Outlook": {"server": "outlook.office365.com", "port": 993},
-    "Yahoo": {"server": "imap.mail.yahoo.com", "port": 993},
-}
-
 
 def detect_imap_server(email_addr):
     if not email_addr or "@" not in email_addr:
@@ -103,29 +96,6 @@ class IMAPEmailReader:
 
         return emails
 
-    def get_folders(self):
-        """Lấy danh sách folders có trong mailbox."""
-        if not self.is_connected or self.connection is None:
-            return []
-
-        status, folders = self.connection.list()
-        if status != "OK":
-            return []
-
-        folder_names = []
-        for folder_data in folders:
-            # Parse folder name from IMAP LIST response
-            decoded = folder_data.decode("utf-8", errors="replace")
-            # Format: (\\flags) "delimiter" "folder_name"
-            match = re.search(r'"([^"]+)"$', decoded)
-            if match:
-                folder_names.append(match.group(1))
-            else:
-                parts = decoded.rsplit(" ", 1)
-                if len(parts) == 2:
-                    folder_names.append(parts[1].strip('"'))
-
-        return folder_names
 
     def disconnect(self):
         """Đóng kết nối IMAP."""
