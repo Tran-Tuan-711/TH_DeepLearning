@@ -17,7 +17,7 @@ from tensorflow.keras.callbacks import EarlyStopping, TensorBoard
 import os
 import datetime
 from utils.logger import setup_logger
-
+git
 logger = setup_logger()
 
 MAX_WORDS = 10000
@@ -54,7 +54,7 @@ def train():
     model = Sequential([
         Embedding(MAX_WORDS, 128, input_length=MAX_LEN),
         Conv1D(128, 5, activation='relu'),
-        GlobalMaxPooling1D(),
+        GlobalMaxPooling1D(),git
         Dense(64, activation='relu'),
         Dropout(0.5),
         Dense(1, activation='sigmoid')  # Binary classification
