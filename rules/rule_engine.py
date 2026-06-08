@@ -122,13 +122,13 @@ class PhishingRuleEngine:
 
         # Check suspicious domain
         if self._check_suspicious_domain(domain):
-            spam_score += 3.0
+            spam_score += 1.0
             result["matched_rules"].append({
                 "group_id": "suspicious_domain",
                 "group_name": "Domain đáng ngờ",
                 "matched_keywords": [domain],
-                "weight": 3.0,
-                "group_score": 3.0,
+                "weight": 1.0,
+                "group_score": 1.0,
             })
 
         # ─── STEP 3: Keyword matching ─────────────────────────────────
